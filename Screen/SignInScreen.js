@@ -9,7 +9,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 
 // import { AuthContext} from '../components/context';
-
+import { AuthContext} from '../component/Context'; 
 
 const vw = Dimensions.get('window').width/100;
 const vh =Dimensions.get ('window').height/100;
@@ -24,6 +24,7 @@ const SignInScreen = ({navigation})=> {
         secureTextEntry:true
     });
 
+    const { signIn } = React.useContext(AuthContext); 
 //     const { signIn} = React.useContext(AuthContext);
 
     const textInputChange= (val) =>{
@@ -145,7 +146,7 @@ const SignInScreen = ({navigation})=> {
                      <View style={styles.button}>
                      <TouchableOpacity
                              style={styles.signin}
-                            onPress= {()=>navigation.navigate('HomeScreen')}
+                            onPress= {()=>{signIn()}}
                            
                         >
                             <LinearGradient
