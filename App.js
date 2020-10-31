@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import { Button, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
 // import component
@@ -13,39 +12,97 @@ import { ActivityIndicator } from 'react-native-paper';
 export default function App() {
 
   // create a state that contain Authatication detail
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);  
+  // Basic Statemangement
+  // const [isLoading, setIsLoading] = React.useState(true);
+  // const [userToken, setUserToken] = React.useState(null); 
+  
+  // statemangement usin Assynoc 
+  const initialLogingState ={
+    isLoading: true,
+    userName:null,
+    userToken:null,
+  };
+
+  const loginReducer = ( prevState , action ) => {
+    switch (action.type) {
+      case 'RETRIEVE_TOKEN':
+        return{
+          ...prevState,
+          userToken : action.token,
+          isLoading:false,
+        };
+        case 'LOGIN':
+        return{
+          ...prevState,
+          userName : action.id,
+          userToken : action.token,
+          isLoading:false,
+        };
+        case 'LOGOUT':
+        return{
+          ...prevState,
+          userName: null,
+          userToken:null,
+          isLoading:false,
+        };
+        case 'REGISTER':
+          return{
+            ...prevState,
+            userName : action.id,
+            userToken : action.token,
+            isLoading:false,
+          };
+    }
+  };
+
+  const [ loginState , dispatch] = React.useReducer( loginReducer , initialLogingState); 
+
 
 // creat signin, signup and signout state usine react hook call
 
 const authContext = React.useMemo (() => ({
   signIn :() => {
-    setUserToken ('fghj');
-    setIsLoading(false);
+    // setUserToken ('fghj');
+    // setIsLoading(false);
+    let userToken;
+    let userName;
+    let password;
+    userToken = null ;
+    if (userName=='yatin' && password=='pass'){
+      userToken = 'yatin123'
+  
+    }
+    console.log ( 'user token:' , userToken);
+    dispatch({ type: 'LOGIN', id : userName , token: userToken});
   },
   signOut :() => {
-    setUserToken (null);
-    setIsLoading(false);
+    // setUserToken (null);
+    // setIsLoading(false);
+    dispatch({ type: 'LOGOUT'});
   },
 
   signUp :() => {
-    setUserToken ('fghj');
-    setIsLoading(false);
+    // setUserToken ('yfghj');
+    // setIsLoading(false);
   },
 
-}));
+}), []);
 
 
   useEffect(() => {
     return () => {
         setTimeout(()=>{
-          setIsLoading(false);
+          // setIsLoading(false);
+          let userToken;
+          userToken = 'yatin12345;'
+          console.log ( 'user token:' , userToken);
+          dispatch({ type: 'REGISTER', token: userToken });
         }, 1 );
     };
   }, [])
 
   // loding screen
-  if (isLoading){
+  if (loginState.isLoading){
     return(
       <View style={{flex:1, justifyContent:"center",alignItems:"center"}}>
         <ActivityIndicator size="large"/>
@@ -58,7 +115,7 @@ const authContext = React.useMemo (() => ({
      
       <NavigationContainer>
         {/**/}
-        {userToken !== null ? (
+        {loginState.userToken !== null ? (
          <Drawer/> 
          )
          :
