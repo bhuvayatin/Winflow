@@ -1,0 +1,8 @@
+{
+    "expo": {
+      "android": {
+        "package": "com.highsense",
+        "googleServicesFile": "./google-services.json"
+      }
+    }
+  }

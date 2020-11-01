@@ -61,12 +61,13 @@ const SignInScreen = ({navigation})=> {
 
   const  loginHandle =(userName,password)=>{
    signIn(userName,password);
+   console.log (userName, password);
   }
 
     return(
        
 
-
+        
         <View style={styles.maincon}>
             <StatusBar backgroundColor="#009387" barStyle="light-content" />
              

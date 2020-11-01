@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import {View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import component
 import { AuthContext} from './component/Context';
 import Drawer from './NavigationBar/MainDrawer';
 import Rootstack from './Screen/RootStack';
 import { ActivityIndicator } from 'react-native-paper';
-
+import * as Google from 'expo-google-app-auth';
 
 export default function App() {
 
@@ -61,19 +61,42 @@ export default function App() {
 // creat signin, signup and signout state usine react hook call
 
 const authContext = React.useMemo (() => ({
-  signIn :() => {
+   
+  signIn :async () => {
+    
+     
     // setUserToken ('fghj');
-    // setIsLoading(false);
-    let userToken;
-    let userName;
-    let password;
-    userToken = null ;
-    if (userName=='yatin' && password=='pass'){
-      userToken = 'yatin123'
+   
+    // let userToken;
+    
+    // userToken = null ;
+    // if (userName=='yatin' && password=='pass'){
+    //   try {
+    //     userToken = 'yatin123'
+    //     await AsyncStorage.setItem('userToken', userToken)
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
   
+    // }
+    // console.log ( 'user token:' , userToken);
+    // dispatch({ type: 'LOGIN', id : userName , token: userToken});
+
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: "644100071753-vq56jpqiq7bd4qs5np29t1vkb184e412.apps.googleusercontent.com",
+        scopes: ['profile', 'email'],
+      });
+  
+      if (result.type === 'success') {
+       let  userToken = 'yatin1234;'
+        dispatch({ type: 'LOGIN', id : result.user.name , token: userToken});
+      } else {
+       console.log("cancelled");
+      }
+    } catch (e) {
+      console.log("error", e);
     }
-    console.log ( 'user token:' , userToken);
-    dispatch({ type: 'LOGIN', id : userName , token: userToken});
   },
   signOut :() => {
     // setUserToken (null);
@@ -81,8 +104,14 @@ const authContext = React.useMemo (() => ({
     dispatch({ type: 'LOGOUT'});
   },
 
-  signUp :() => {
+  signUp : async() => {
     // setUserToken ('yfghj');
+    try {
+      userToken = 'yatin123;'
+      await AsyncStorage.removeItem('userToken')
+    } catch (e) {
+      console.log(e);
+    }
     // setIsLoading(false);
   },
 
@@ -91,13 +120,20 @@ const authContext = React.useMemo (() => ({
 
   useEffect(() => {
     return () => {
-        setTimeout(()=>{
+        setTimeout(async()=>{
           // setIsLoading(false);
+
           let userToken;
-          userToken = 'yatin12345;'
+          userToken = null;
+          try {
+          
+            await AsyncStorage.getItem('userToken')
+          } catch (e) {
+            console.log(e);
+          }
           console.log ( 'user token:' , userToken);
           dispatch({ type: 'REGISTER', token: userToken });
-        }, 1 );
+        },100)
     };
   }, [])
 

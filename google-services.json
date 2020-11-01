@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "644100071753",
+    "firebase_url": "https://winflow-a5fd6.firebaseio.com",
+    "project_id": "winflow-a5fd6",
+    "storage_bucket": "winflow-a5fd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644100071753:android:c29f8c89aeb79c40327a98",
+        "android_client_info": {
+          "package_name": "com.highsense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644100071753-l5ogto6gmerkmdkjf9kp8jj16ik08vsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3GDGp6K3Q4a--Xb6dmkPq2ra9NuaNsYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644100071753-l5ogto6gmerkmdkjf9kp8jj16ik08vsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
