@@ -133,7 +133,7 @@ const authContext = React.useMemo (() => ({
           }
           console.log ( 'user token:' , userToken);
           dispatch({ type: 'REGISTER', token: userToken });
-        },100)
+        },10)
     };
   }, [])
 
